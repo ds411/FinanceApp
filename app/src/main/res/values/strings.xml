@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Finance App</string>
+    <string name="password_input">Input Password</string>
+    <string name="password_confirm">Confirm</string>
+</resources>
