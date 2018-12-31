@@ -2,4 +2,9 @@
     <string name="app_name">Finance App</string>
     <string name="password_input">Input Password</string>
     <string name="password_confirm">Confirm</string>
+    <string name="transaction_tag">Tag</string>
+    <string name="transaction_amount">Amount</string>
+    <string name="transaction_category">Category</string>
+    <string name="transaction_otherParty">Other Party</string>
+    <string name="transaction_create">Create Transaction</string>
 </resources>

@@ -7,4 +7,44 @@
         android:layout_height="match_parent"
         tools:context=".TransactionActivity">
 
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                tools:layout_editor_absoluteY="36dp" tools:layout_editor_absoluteX="84dp" android:id="@+id/tagField"
+                android:hint="@string/transaction_tag"/>
+        <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/otherPartyField"
+                android:hint="@string/transaction_otherParty"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/amountField" android:hint="@string/transaction_amount"/>
+        <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/transactionTypeField"
+                android:orientation="horizontal">
+            <RadioButton
+                    android:text="Payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/radioButton" android:layout_weight="1"/>
+            <RadioButton
+                    android:text="Receipt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/radioButton2" android:layout_weight="1"/>
+        </RadioGroup>
+        <Button
+                android:text="@string/transaction_create"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/createTransactionButton"
+                android:layout_weight="1"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -37,7 +37,8 @@ public class FeedActivity extends AppCompatActivity {
             dbDir.mkdir();
         }
         db = SQLiteDatabase.openOrCreateDatabase(dbDir, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS Transactions(id INTEGER PRIMARY KEY, amount INTEGER, time TEXT);");
+        db.execSQL("DROP TABLE IF EXISTS Transactions");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Transactions(id INTEGER PRIMARY KEY, tag TEXT, otherParty TEXT, amount INTEGER, transactionType INTEGER, date TEXT, time TEXT);");
     }
 
     private void initializeAddTransaction() {
@@ -58,10 +59,13 @@ public class FeedActivity extends AppCompatActivity {
 
     private void reloadFeed() {
         feedText.setText("");
-        Cursor cursor = db.rawQuery("SELECT amount, time FROM Transactions", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM Transactions", null);
         if(cursor.moveToFirst()) {
             do {
-                feedText.append(cursor.getString(0) + ", " + cursor.getString(1) + "\n");
+                for(int i = 0; i < cursor.getColumnCount(); i++) {
+                    feedText.append(cursor.getString(i));
+                }
+                feedText.append("\n");
             } while(cursor.moveToNext());
         }
     }
