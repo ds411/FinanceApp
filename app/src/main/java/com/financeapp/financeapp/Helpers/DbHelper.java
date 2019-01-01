@@ -61,12 +61,12 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public Transaction getTransaction(long transactionId) {
         SQLiteDatabase db = this.getReadableDatabase();
+        Transaction transaction = null;
 
         Cursor c = db.rawQuery("SELECT * FROM Transactions WHERE id = " + transactionId, null);
-
         if(c != null) {
             c.moveToFirst();
-            return new Transaction()
+            transaction = new Transaction()
                     .setId(c.getLong(0))
                     .setTag(c.getString(1))
                     .setOtherParty(c.getString(2))
@@ -75,9 +75,10 @@ public class DbHelper extends SQLiteOpenHelper {
                     .setDate(c.getString(5))
                     .setTime(c.getString(6))
                     .setAccount(getAccount(c.getLong(7)));
+            c.close();
         }
 
-        return null;
+        return transaction;
     }
 
     public long createAccount(Account account) {
@@ -90,17 +91,19 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public Account getAccount(long accountId) {
         SQLiteDatabase db = this.getReadableDatabase();
+        Account account = null;
 
         Cursor c = db.rawQuery("SELECT * FROM Accounts WHERE id = " + accountId, null);
 
         if(c != null) {
             c.moveToFirst();
-            return new Account()
+            account =  new Account()
                     .setId(c.getLong(0))
                     .setAccountName(c.getString(1))
                     .setBalance(c.getInt(2)/100d);
+            c.close();
         }
 
-        return null;
+        return account;
     }
 }
