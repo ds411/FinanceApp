@@ -1,5 +1,7 @@
 package com.financeapp.financeapp.Models;
 
+import android.content.ContentValues;
+
 public class Account {
 
     private long id;
@@ -13,6 +15,13 @@ public class Account {
     public Account(String accountName, double balance) {
         this.accountName = accountName;
         this.balance = balance;
+    }
+
+    public ContentValues getContentValues() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("accountName", accountName);
+        contentValues.put("balance", (int)balance*100);
+        return contentValues;
     }
 
     public long getId() {

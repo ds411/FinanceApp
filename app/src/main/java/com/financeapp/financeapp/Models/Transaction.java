@@ -13,10 +13,10 @@ public class Transaction {
     private String otherParty;
     private double amount;
     private short transactionType;
-    private String dateString;
+    private String date;
     private String time;
 
-    private Date date;
+    private Date rawDate;
 
     private Account account;
 
@@ -33,7 +33,7 @@ public class Transaction {
         this.otherParty = otherParty;
         this.amount = amount;
         this.transactionType = transactionType;
-        this.date = new Date();
+        this.rawDate = new Date();
     }
 
     public ContentValues getContentValues() {
@@ -42,8 +42,8 @@ public class Transaction {
         contentValues.put("otherParty", otherParty);
         contentValues.put("amount", amount);
         contentValues.put("transactionType", transactionType);
-        contentValues.put("date", dateFormat.format(date));
-        contentValues.put("time", timeFormat.format(date));
+        contentValues.put("date", dateFormat.format(rawDate));
+        contentValues.put("time", timeFormat.format(rawDate));
         contentValues.put("account_id", account.getId());
         return contentValues;
     }
@@ -97,12 +97,12 @@ public class Transaction {
         return transactionTypes[transactionType];
     }
 
-    public String getDateString() {
-        return dateString;
+    public String getDate() {
+        return date;
     }
 
-    public Transaction setDateString(String dateString) {
-        this.dateString = dateString;
+    public Transaction setDate(String date) {
+        this.date = date;
         return this;
     }
 

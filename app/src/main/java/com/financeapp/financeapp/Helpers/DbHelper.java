@@ -72,12 +72,20 @@ public class DbHelper extends SQLiteOpenHelper {
                     .setOtherParty(c.getString(2))
                     .setAmount(c.getInt(3) / 100d)
                     .setTransactionType(c.getShort(4))
-                    .setDateString(c.getString(5))
+                    .setDate(c.getString(5))
                     .setTime(c.getString(6))
                     .setAccount(getAccount(c.getLong(7)));
         }
 
         return null;
+    }
+
+    public long createAccount(Account account) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = account.getContentValues();
+
+        return db.insert("Accounts", null, contentValues);
     }
 
     public Account getAccount(long accountId) {
@@ -88,9 +96,9 @@ public class DbHelper extends SQLiteOpenHelper {
         if(c != null) {
             c.moveToFirst();
             return new Account()
-//todo: transaction account variable hydration builder
-
-                    ;
+                    .setId(c.getLong(0))
+                    .setAccountName(c.getString(1))
+                    .setBalance(c.getInt(2)/100d);
         }
 
         return null;
