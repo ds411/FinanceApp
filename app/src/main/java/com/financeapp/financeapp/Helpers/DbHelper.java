@@ -74,17 +74,16 @@ public class DbHelper extends SQLiteOpenHelper {
                     .setTransactionType(c.getShort(4))
                     .setDateString(c.getString(5))
                     .setTime(c.getString(6))
-                    .setAccountId(c.getLong(7))
-                    .setAccount(null);
+                    .setAccount(getAccount(c.getLong(7)));
         }
 
         return null;
     }
 
-    public Account getAccountByTransactionId(long transactionId) {
+    public Account getAccount(long accountId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.rawQuery("SELECT * FROM Accounts WHERE id = " + transactionId, null);
+        Cursor c = db.rawQuery("SELECT * FROM Accounts WHERE id = " + accountId, null);
 
         if(c != null) {
             c.moveToFirst();

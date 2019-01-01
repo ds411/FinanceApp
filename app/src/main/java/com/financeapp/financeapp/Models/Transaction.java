@@ -18,7 +18,6 @@ public class Transaction {
 
     private Date date;
 
-    private long accountId;
     private Account account;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,11 +121,6 @@ public class Transaction {
 
     public Transaction setAccount(Account account) {
         this.account = account;
-        return this;
-    }
-
-    public Transaction setAccountId(long accountId) {
-        this.accountId = accountId;
         return this;
     }
 }
