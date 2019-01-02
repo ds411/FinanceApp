@@ -2,21 +2,22 @@ package com.financeapp.financeapp;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.financeapp.financeapp.Helpers.DbHelper;
+import com.financeapp.financeapp.Models.Transaction;
 
-import java.io.File;
+import java.util.List;
 
 public class FeedActivity extends AppCompatActivity {
 
     private FloatingActionButton addTransaction;
     private TextView feedText;
 
-    private SQLiteDatabase db;
+    private DbHelper db;
     String password;
 
     @Override
@@ -26,19 +27,8 @@ public class FeedActivity extends AppCompatActivity {
         password = intent.getStringExtra("password");
         setContentView(R.layout.activity_feed);
 
-        initializeDb();
+        db = new DbHelper(this);
         initializeAddTransaction();
-    }
-
-    private void initializeDb() {
-        String dbName = "transactions.db";
-        File dbDir = getDatabasePath(dbName);
-        if(!dbDir.exists()) {
-            dbDir.mkdir();
-        }
-        db = SQLiteDatabase.openOrCreateDatabase(dbDir, null);
-        db.execSQL("DROP TABLE IF EXISTS Transactions");
-        db.execSQL("CREATE TABLE IF NOT EXISTS Transactions(id INTEGER PRIMARY KEY, tag TEXT, otherParty TEXT, amount INTEGER, transactionType INTEGER, date TEXT, time TEXT);");
     }
 
     private void initializeAddTransaction() {
@@ -59,14 +49,16 @@ public class FeedActivity extends AppCompatActivity {
 
     private void reloadFeed() {
         feedText.setText("");
-        Cursor cursor = db.rawQuery("SELECT * FROM Transactions", null);
-        if(cursor.moveToFirst()) {
-            do {
-                for(int i = 0; i < cursor.getColumnCount(); i++) {
-                    feedText.append(cursor.getString(i));
-                }
-                feedText.append("\n");
-            } while(cursor.moveToNext());
+        List<Transaction> transactionList = db.getAllTransactions();
+        for(Transaction transaction : transactionList) {
+            feedText.append(
+                    transaction.getDate() +
+                            " " +
+                            transaction.getTime() +
+                            " $" +
+                            transaction.getAmount() +
+                            "\n"
+            );
         }
     }
 }

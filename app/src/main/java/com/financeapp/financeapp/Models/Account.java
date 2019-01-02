@@ -2,6 +2,8 @@ package com.financeapp.financeapp.Models;
 
 import android.content.ContentValues;
 
+import java.util.Locale;
+
 public class Account {
 
     private long id;
@@ -49,5 +51,10 @@ public class Account {
     public Account setBalance(double balance) {
         this.balance = balance;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "%s ($%.2f)", accountName, balance);
     }
 }

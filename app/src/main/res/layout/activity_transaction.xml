@@ -11,6 +11,10 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="41dp" android:id="@+id/accountSpinner" tools:layout_editor_absoluteY="172dp"
+                tools:layout_editor_absoluteX="0dp"/>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +48,7 @@
         <Button
                 android:text="@string/transaction_create"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/createTransactionButton"
+                android:layout_height="0dp" android:id="@+id/createTransactionButton"
                 android:layout_weight="1"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
