@@ -53,11 +53,11 @@ public class TransactionRecylerViewAdapter extends RecyclerView.Adapter<Transact
 
         TransactionViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.cardView);
-            amount = (TextView) itemView.findViewById(R.id.amount);
-            otherParty = (TextView) itemView.findViewById(R.id.otherParty);
-            accountName = (TextView) itemView.findViewById(R.id.accountName);
-            tag = (TextView) itemView.findViewById(R.id.tag);
+            cardView = itemView.findViewById(R.id.cardView);
+            amount = itemView.findViewById(R.id.amount);
+            otherParty = itemView.findViewById(R.id.otherParty);
+            accountName = itemView.findViewById(R.id.accountName);
+            tag = itemView.findViewById(R.id.tag);
         }
     }
 }
