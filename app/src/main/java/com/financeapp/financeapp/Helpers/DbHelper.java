@@ -106,6 +106,28 @@ public class DbHelper extends SQLiteOpenHelper {
         return transactionList;
     }
 
+    public List<Transaction> getTransactionsByAccount(Account account) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Transaction> transactionList = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT * FROM Transactions WHERE account_id = " + account.getId() + " ORDER BY date DESC;", null);
+        while(c.moveToNext()) {
+            transactionList.add(
+                    new Transaction()
+                            .setId(c.getLong(0))
+                            .setTag(c.getString(1))
+                            .setOtherParty(c.getString(2))
+                            .setAmount(c.getInt(3) / 100d)
+                            .setTransactionType(c.getShort(4))
+                            .setDate(c.getString(5))
+                            .setTime(c.getString(6))
+                            .setAccount(getAccount(c.getLong(7)))
+            );
+        }
+        c.close();
+        return transactionList;
+    }
+
     public List<String> getOtherParties() {
         SQLiteDatabase db = this.getReadableDatabase();
         List<String> otherPartyList = new ArrayList<>();
