@@ -27,14 +27,13 @@ public class TransactionRecylerViewAdapter extends RecyclerView.Adapter<Transact
     @Override
     public TransactionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_transaction, viewGroup, false);
-        TransactionViewHolder transactionViewHolder = new TransactionViewHolder(view);
-        return transactionViewHolder;
+        return new TransactionViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(TransactionViewHolder transactionViewHolder, int i) {
         transactionViewHolder.tag.setText(transactionList.get(i).getTag());
-        transactionViewHolder.amount.setText(String.format("$.2f", transactionList.get(i).getAmount()));
+        transactionViewHolder.amount.setText(String.format("$%.2f", transactionList.get(i).getAmount()));
         transactionViewHolder.otherParty.setText(transactionList.get(i).getOtherParty());
         transactionViewHolder.accountName.setText(transactionList.get(i).getAccount().getAccountName());
     }
