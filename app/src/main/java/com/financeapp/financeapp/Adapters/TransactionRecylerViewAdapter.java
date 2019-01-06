@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TransactionRecylerViewAdapter extends RecyclerView.Adapter<TransactionRecylerViewAdapter.TransactionViewHolder> {
 
-    List<Transaction> transactionList;
+    private List<Transaction> transactionList;
 
     public TransactionRecylerViewAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;

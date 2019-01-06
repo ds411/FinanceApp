@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper {
             ");";
 
     private static final String CREATE_TABLE_ACCOUNTS =
-            "CREATE TABLE IF NOT EXISTS Acccunts(" +
+            "CREATE TABLE IF NOT EXISTS Accounts(" +
                     "id INTEGER PRIMARY KEY, " +
                     "accountName TEXT," +
                     "balance INTEGER" +
