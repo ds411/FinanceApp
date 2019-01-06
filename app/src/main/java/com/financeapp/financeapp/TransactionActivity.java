@@ -42,15 +42,17 @@ public class TransactionActivity extends AppCompatActivity {
         createTransactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tag = tagField.getText().toString();
-                String otherParty = otherPartyField.getText().toString();
+                if(tagField.getText().length() > 0 && amountField.getText().length() > 0 && transactionTypeField.getCheckedRadioButtonId() != -1 && otherPartyField.getText().length() > 0 && accountSpinner.getSelectedItem() != null) {
+                    String tag = tagField.getText().toString();
+                    String otherParty = otherPartyField.getText().toString();
 
-                int amount = (int) Double.parseDouble(amountField.getText().toString()) * 100;
-                short transactionType = (short)transactionTypeField.getCheckedRadioButtonId();
-                Transaction transaction = new Transaction(tag, otherParty, amount, transactionType);
-                db.makeTransaction(transaction, ((Account) accountSpinner.getSelectedItem()).getId());
+                    int amount = (int) (Double.parseDouble(amountField.getText().toString()) * 100);
+                    short transactionType = (short) transactionTypeField.getCheckedRadioButtonId();
+                    Transaction transaction = new Transaction(tag, otherParty, amount, transactionType);
+                    db.makeTransaction(transaction, ((Account) accountSpinner.getSelectedItem()).getId());
 
-                finish();
+                    finish();
+                }
             }
         });
     }
