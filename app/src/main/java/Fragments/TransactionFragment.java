@@ -1,4 +1,4 @@
-package com.financeapp.financeapp;
+package Fragments;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,10 +7,11 @@ import android.widget.*;
 import com.financeapp.financeapp.Helpers.DbHelper;
 import com.financeapp.financeapp.Models.Account;
 import com.financeapp.financeapp.Models.Transaction;
+import com.financeapp.financeapp.R;
 
 import java.util.List;
 
-public class TransactionActivity extends AppCompatActivity {
+public class TransactionFragment extends AppCompatActivity {
 
     private DbHelper db;
     private EditText tagField;
@@ -24,7 +25,7 @@ public class TransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_transaction);
+        setContentView(R.layout.fragment_transaction);
 
         db = new DbHelper(this);
 
