@@ -1,4 +1,4 @@
-package Fragments;
+package com.financeapp.financeapp.Fragments;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;

@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="Fragments.FeedFragment">
+        <activity android:name="com.financeapp.financeapp.Fragments.FeedFragment">
         </activity>
-        <activity android:name="Fragments.TransactionFragment">
+        <activity android:name="com.financeapp.financeapp.Fragments.TransactionFragment">
         </activity>
     </application>
 

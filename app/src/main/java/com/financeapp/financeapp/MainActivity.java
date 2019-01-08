@@ -1,6 +1,6 @@
 package com.financeapp.financeapp;
 
-import Fragments.FeedFragment;
+import com.financeapp.financeapp.Fragments.FeedFragment;
 import android.Manifest;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

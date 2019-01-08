@@ -1,4 +1,4 @@
-package Fragments;
+package com.financeapp.financeapp.Fragments;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
