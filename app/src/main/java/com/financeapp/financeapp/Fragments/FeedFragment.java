@@ -1,21 +1,26 @@
 package com.financeapp.financeapp.Fragments;
 
+import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.financeapp.financeapp.Helpers.DbHelper;
+import com.financeapp.financeapp.Models.RecyclerAdapter;
 import com.financeapp.financeapp.Models.Transaction;
 import com.financeapp.financeapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedFragment extends Fragment {
 
+    private Activity activity;
     private View view;
 
     private FloatingActionButton addTransaction;
@@ -23,6 +28,10 @@ public class FeedFragment extends Fragment {
 
     private DbHelper db;
     private String password;
+
+    private ArrayList<String> amountList = new ArrayList<>();
+    private ArrayList<String> dateList = new ArrayList<>();
+    private ArrayList<String> tagList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,8 @@ public class FeedFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         view = getView();
+        activity = getActivity();
+        initializeCards();
         initializeAddTransaction();
     }
 
@@ -57,6 +68,24 @@ public class FeedFragment extends Fragment {
             }
         });
         //reloadFeed();
+    }
+
+    private void initializeCards(){
+        List<Transaction> transactionList = db.getAllTransactions();
+        for (Transaction transaction : transactionList){
+            amountList.add("$" + transaction.getAmount());
+            dateList.add(transaction.getDate().substring(5, 8) + transaction.getDate().substring(8, 10) + "-" + transaction.getDate().substring(0, 4));
+            tagList.add(transaction.getTag());
+        }
+        initRecyclerView();
+    }
+
+    private void initRecyclerView(){
+        RecyclerView recyclerView = view.findViewById(R.id.feed);
+        RecyclerAdapter adapter = new RecyclerAdapter(activity, dateList, amountList, tagList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+
     }
 
 //    private void reloadFeed() {
