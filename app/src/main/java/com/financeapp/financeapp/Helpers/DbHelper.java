@@ -8,13 +8,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.financeapp.financeapp.Models.Account;
 import com.financeapp.financeapp.Models.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DbHelper extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME = "financeDb";
     private final static int DATABASE_VERSION = 1;
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final String CREATE_TABLE_TRANSACTIONS =
             "CREATE TABLE IF NOT EXISTS Transactions(" +
@@ -193,6 +198,144 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         c.close();
         return accountList;
+    }
+
+    public double getMoneySpentToday() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 0 AND date = ? ORDER BY time DESC;", new String[]{dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneySpentThisWeek() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        Date oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneWeekAgo), dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneySpentThisMonth() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.MONTH, -3);
+        Date oneMonthAgo = calendar.getTime();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneySpentThisYear() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.YEAR, -1);
+        Date oneMonthAgo = calendar.getTime();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneyEarnedToday() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 1 AND date = ? ORDER BY time DESC;", new String[]{dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneyEarnedThisWeek() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        Date oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneWeekAgo), dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneyEarnedThisMonth() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.MONTH, -3);
+        Date oneMonthAgo = calendar.getTime();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getMoneyEarnedThisYear() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.YEAR, -1);
+        Date oneMonthAgo = calendar.getTime();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
+    public double getNetMoneyToday() {
+        return getMoneyEarnedToday() - getMoneySpentToday();
+    }
+
+    public double getNetMoneyThisWeek() {
+        return getMoneyEarnedThisWeek() - getMoneySpentThisWeek();
+    }
+
+    public double getNetMoneyThisMonth() {
+        return getMoneyEarnedThisMonth() - getMoneySpentThisMonth();
+    }
+
+    public double getNetMoneyThisYear() {
+        return getMoneyEarnedThisYear() - getMoneySpentThisYear();
     }
 
 }
