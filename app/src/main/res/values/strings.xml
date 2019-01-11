@@ -7,4 +7,9 @@
     <string name="transaction_category">Category</string>
     <string name="transaction_otherParty">Other Party</string>
     <string name="transaction_create">Create Transaction</string>
+    <!--<string name="date">Date</string>-->
+    <string name="amount">Amount</string>
+    <string name="tag">Tag</string>
+    <string name="otherparty">otherParty</string>
+    <string name="date">Date</string>
 </resources>

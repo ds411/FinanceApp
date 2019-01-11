@@ -54,7 +54,7 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long makeTransaction(Transaction transaction, long accountId) {
+    public long makeTransaction(Transaction transaction) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = transaction.getContentValues();
@@ -76,8 +76,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     .setAmount(c.getInt(3) / 100d)
                     .setTransactionType(c.getShort(4))
                     .setDate(c.getString(5))
-                    .setTime(c.getString(6))
-                    .setAccount(getAccount(c.getLong(7)));
+                    .setTime(c.getString(6));
+                    // .setAccount(getAccount(c.getLong(7)));
             c.close();
         }
 
@@ -88,7 +88,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Transaction> transactionList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT * FROM Transactions ORDER BY date DESC;", null);
+        Cursor c = db.rawQuery("SELECT * FROM Transactions ORDER BY date DESC,time DESC;", null);
         while(c.moveToNext()) {
             transactionList.add(
                     new Transaction()
@@ -99,7 +99,7 @@ public class DbHelper extends SQLiteOpenHelper {
                             .setTransactionType(c.getShort(4))
                             .setDate(c.getString(5))
                             .setTime(c.getString(6))
-                            .setAccount(getAccount(c.getLong(7)))
+                            // .setAccount(getAccount(c.getLong(7)))
             );
         }
         c.close();
@@ -121,7 +121,7 @@ public class DbHelper extends SQLiteOpenHelper {
                             .setTransactionType(c.getShort(4))
                             .setDate(c.getString(5))
                             .setTime(c.getString(6))
-                            .setAccount(getAccount(c.getLong(7)))
+                            // .setAccount(getAccount(c.getLong(7)))
             );
         }
         c.close();
@@ -138,6 +138,18 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         c.close();
         return otherPartyList;
+    }
+
+    public List<String> getTags() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> tagList = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT DISTINCT tag FROM Transactions ORDER BY tag ASC;", null);
+        while(c.moveToNext()) {
+            tagList.add(c.getString(0));
+        }
+        c.close();
+        return tagList;
     }
 
     public long createAccount(Account account) {
@@ -182,4 +194,5 @@ public class DbHelper extends SQLiteOpenHelper {
         c.close();
         return accountList;
     }
+
 }

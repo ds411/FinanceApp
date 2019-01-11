@@ -15,12 +15,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="41dp" android:id="@+id/accountSpinner" tools:layout_editor_absoluteY="172dp"
                 tools:layout_editor_absoluteX="0dp"/>
-        <EditText
+        <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:ems="10"
-                tools:layout_editor_absoluteY="36dp" tools:layout_editor_absoluteX="84dp" android:id="@+id/tagField"
+                android:layout_height="wrap_content" android:id="@+id/tagField"
                 android:hint="@string/transaction_tag"/>
         <AutoCompleteTextView
                 android:layout_width="match_parent"

@@ -18,7 +18,7 @@ public class Transaction {
 
     private Date rawDate;
 
-    private Account account;
+    // private Account account;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -44,7 +44,7 @@ public class Transaction {
         contentValues.put("transactionType", transactionType);
         contentValues.put("date", dateFormat.format(rawDate));
         contentValues.put("time", timeFormat.format(rawDate));
-        contentValues.put("account_id", account.getId());
+        // contentValues.put("account_id", account.getId());
         return contentValues;
     }
 
@@ -115,12 +115,12 @@ public class Transaction {
         return this;
     }
 
-    public Account getAccount() {
-        return account;
-    }
+    // public Account getAccount() {
+    //     return account;
+    // }
 
-    public Transaction setAccount(Account account) {
-        this.account = account;
-        return this;
-    }
+    // public Transaction setAccount(Account account) {
+    //     this.account = account;
+    //     return this;
+    // }
 }

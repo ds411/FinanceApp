@@ -16,13 +16,11 @@
             android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/feedText"/>
-    <TextView
-            android:layout_width="0dp"
-            android:layout_height="462dp"
-            android:id="@+id/feedText" android:layout_marginTop="7dp"
-            android:layout_marginBottom="19dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/addTransaction" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="13dp" android:layout_marginEnd="13dp"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="395dp"
+            android:layout_height="554dp" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp"
+            android:id="@+id/feed"
+            android:scrollbars="vertical"/>
+
 </android.support.constraint.ConstraintLayout>

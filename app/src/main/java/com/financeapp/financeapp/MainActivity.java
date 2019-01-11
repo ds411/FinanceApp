@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, FeedFragment.class);
             intent.putExtra("password", password);
             startActivity(intent);
+            finish();
         }
         else {
             EasyPermissions.requestPermissions(this, "This app requires permission to save transaction information.", 1, permissions);
