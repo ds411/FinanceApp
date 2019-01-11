@@ -1,4 +1,4 @@
-package com.financeapp.financeapp.Models;
+package com.financeapp.financeapp.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.financeapp.financeapp.Models.Transaction;
 import com.financeapp.financeapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
@@ -23,10 +25,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<String> tagList = new ArrayList<>();
     private Context mContext;
 
-    public RecyclerAdapter(Context context, ArrayList<String> dates, ArrayList<String> amounts, ArrayList<String> tags){
-        amountList = amounts;
-        dateList = dates;
-        tagList = tags;
+    public RecyclerAdapter(Context context, List<Transaction> transactionList){
+        for(Transaction transaction : transactionList) {
+            amountList.add(String.format("$%.2f", transaction.getAmount()));
+            dateList.add(transaction.getDate());
+            tagList.add(transaction.getTag());
+        }
         mContext = context;
     }
 

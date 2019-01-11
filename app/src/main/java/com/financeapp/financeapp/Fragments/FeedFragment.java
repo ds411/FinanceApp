@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.financeapp.financeapp.Adapters.RecyclerAdapter;
 import com.financeapp.financeapp.Helpers.DbHelper;
-import com.financeapp.financeapp.Models.RecyclerAdapter;
 import com.financeapp.financeapp.Models.Transaction;
 import com.financeapp.financeapp.R;
 
@@ -49,12 +49,11 @@ public class FeedFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         view = getView();
         activity = getActivity();
-        initializeCards();
         initializeAddTransaction();
+        initRecyclerView();
     }
 
     private void initializeAddTransaction() {
-        feed = view.findViewById(R.id.feed);
         addTransaction = view.findViewById(R.id.addTransaction);
         addTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,22 +69,12 @@ public class FeedFragment extends Fragment {
         //reloadFeed();
     }
 
-    private void initializeCards(){
-        List<Transaction> transactionList = db.getAllTransactions();
-        for (Transaction transaction : transactionList){
-            amountList.add("$" + transaction.getAmount());
-            dateList.add(transaction.getDate().substring(5, 8) + transaction.getDate().substring(8, 10) + "-" + transaction.getDate().substring(0, 4));
-            tagList.add(transaction.getTag());
-        }
-        initRecyclerView();
-    }
-
     private void initRecyclerView(){
-        RecyclerView recyclerView = view.findViewById(R.id.feed);
-        RecyclerAdapter adapter = new RecyclerAdapter(activity, dateList, amountList, tagList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-
+        feed = view.findViewById(R.id.feed);
+        feed.removeAllViews();
+        RecyclerAdapter adapter = new RecyclerAdapter(activity, db.getAllTransactions());
+        feed.setAdapter(adapter);
+        feed.setLayoutManager(new LinearLayoutManager(activity));
     }
 
 //    private void reloadFeed() {
