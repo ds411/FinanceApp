@@ -8,18 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.financeapp.financeapp.Models.Account;
 import com.financeapp.financeapp.Models.Transaction;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class DbHelper extends SQLiteOpenHelper {
 
     private final static String DATABASE_NAME = "financeDb";
     private final static int DATABASE_VERSION = 1;
-
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final String CREATE_TABLE_TRANSACTIONS =
             "CREATE TABLE IF NOT EXISTS Transactions(" +
@@ -28,8 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     "otherParty TEXT, " +
                     "amount INTEGER, " +
                     "transactionType INTEGER, " +
-                    "date TEXT, " +
-                    "time TEXT," +
+                    "timestamp TEXT DEFAULT CURRENT_TIMESTAMP," +
                     "account_id INTEGER" +
             ");";
 
@@ -42,7 +36,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
     }
 
     @Override
@@ -61,9 +54,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public long makeTransaction(Transaction transaction) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues contentValues = transaction.getContentValues();
-
         return db.insert("Transactions", null, contentValues);
     }
 
@@ -80,9 +71,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     .setOtherParty(c.getString(2))
                     .setAmount(c.getInt(3) / 100d)
                     .setTransactionType(c.getShort(4))
-                    .setDate(c.getString(5))
-                    .setTime(c.getString(6));
-                    // .setAccount(getAccount(c.getLong(7)));
+                    .setDateAndTime(c.getString(5));
+                    // .setAccount(getAccount(c.getLong(6)));
             c.close();
         }
 
@@ -93,7 +83,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Transaction> transactionList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT * FROM Transactions ORDER BY date DESC,time DESC;", null);
+        Cursor c = db.rawQuery("SELECT * FROM Transactions ORDER BY timestamp DESC;", null);
         while(c.moveToNext()) {
             transactionList.add(
                     new Transaction()
@@ -102,9 +92,8 @@ public class DbHelper extends SQLiteOpenHelper {
                             .setOtherParty(c.getString(2))
                             .setAmount(c.getInt(3) / 100d)
                             .setTransactionType(c.getShort(4))
-                            .setDate(c.getString(5))
-                            .setTime(c.getString(6))
-                            // .setAccount(getAccount(c.getLong(7)))
+                            .setDateAndTime(c.getString(5))
+                            // .setAccount(getAccount(c.getLong(6)))
             );
         }
         c.close();
@@ -115,7 +104,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         List<Transaction> transactionList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT * FROM Transactions WHERE account_id = " + account.getId() + " ORDER BY date DESC;", null);
+        Cursor c = db.rawQuery("SELECT * FROM Transactions WHERE account_id = " + account.getId() + " ORDER BY timestamp DESC;", null);
         while(c.moveToNext()) {
             transactionList.add(
                     new Transaction()
@@ -124,9 +113,8 @@ public class DbHelper extends SQLiteOpenHelper {
                             .setOtherParty(c.getString(2))
                             .setAmount(c.getInt(3) / 100d)
                             .setTransactionType(c.getShort(4))
-                            .setDate(c.getString(5))
-                            .setTime(c.getString(6))
-                            // .setAccount(getAccount(c.getLong(7)))
+                            .setDateAndTime(c.getString(5))
+                            // .setAccount(getAccount(c.getLong(6)))
             );
         }
         c.close();
@@ -202,10 +190,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneySpentToday() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 0 AND date = ? ORDER BY time DESC;", new String[]{dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', 'start of day') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -215,11 +202,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneySpentThisWeek() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
-        Date oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneWeekAgo), dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-7 days') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -229,14 +214,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneySpentThisMonth() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.MONTH, -3);
-        Date oneMonthAgo = calendar.getTime();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -246,14 +226,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneySpentThisYear() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.YEAR, -1);
-        Date oneMonthAgo = calendar.getTime();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -263,10 +238,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneyEarnedToday() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 1 AND date = ? ORDER BY time DESC;", new String[]{dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', 'start of day') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -276,11 +250,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneyEarnedThisWeek() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
-        Date oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneWeekAgo), dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-6 days') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -290,14 +262,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneyEarnedThisMonth() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.MONTH, -3);
-        Date oneMonthAgo = calendar.getTime();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -307,15 +274,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneyEarnedThisYear() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        calendar.add(Calendar.YEAR, -1);
-        Date oneMonthAgo = calendar.getTime();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN ? AND ? ORDER BY date DESC, time DESC;", new String[]{dateFormat.format(oneMonthAgo), dateFormat.format(now)});
-        while(c.moveToNext()) {
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
+        while (c.moveToNext()) {
             spent += c.getInt(0);
         }
         c.close();

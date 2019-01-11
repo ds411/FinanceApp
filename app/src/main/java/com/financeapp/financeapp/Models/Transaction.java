@@ -3,6 +3,7 @@ package com.financeapp.financeapp.Models;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -42,8 +43,6 @@ public class Transaction {
         contentValues.put("otherParty", otherParty);
         contentValues.put("amount", amount);
         contentValues.put("transactionType", transactionType);
-        contentValues.put("date", dateFormat.format(rawDate));
-        contentValues.put("time", timeFormat.format(rawDate));
         // contentValues.put("account_id", account.getId());
         return contentValues;
     }
@@ -112,6 +111,19 @@ public class Transaction {
 
     public Transaction setTime(String time) {
         this.time = time;
+        return this;
+    }
+
+    public Transaction setDateAndTime(String timestamp) {
+        try {
+            Date datetime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timestamp);
+            date = dateFormat.format(datetime);
+            time = timeFormat.format(datetime);
+        } catch(ParseException pe) {
+            pe.printStackTrace();
+            date = "error";
+            time = "error";
+        }
         return this;
     }
 
