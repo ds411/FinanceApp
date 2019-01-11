@@ -1,20 +1,22 @@
-package com.financeapp.financeapp;
+package com.financeapp.financeapp.Fragments;
 
-import com.financeapp.financeapp.Fragments.FeedFragment;
-import android.Manifest;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.financeapp.financeapp.Fragments.PasswordScreenFragment;
+import com.financeapp.financeapp.MainActivity;
+import com.financeapp.financeapp.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity {
+public class PasswordScreenFragment extends Fragment {
 
     private static MessageDigest sha256Digest;
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
             nsae.printStackTrace();
         }
     }
+
+    private View view;
 
     private EditText passwordInput;
     private Button passwordConfirm;
@@ -37,21 +41,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, new PasswordScreenFragment(), "main")
-                .addToBackStack(null)
-                .commit();
-
-        //initializeApp();
     }
 
-    private void initializeApp() {
-        passwordInput = findViewById(R.id.passwordInput);
-        passwordConfirm = findViewById(R.id.passwordConfirm);
-        passwordInputErrors = findViewById(R.id.passwordInputErrors);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_password, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        view = getView();
+        initializePasswordInput();
+    }
+
+    private void initializePasswordInput() {
+        passwordInput = view.findViewById(R.id.passwordInput);
+        passwordConfirm = view.findViewById(R.id.passwordConfirm);
+        passwordInputErrors = view.findViewById(R.id.passwordInputErrors);
 
         passwordConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //                password = passwordInput.getText().toString();
 //                String digest = new String(sha256Digest.digest(password.getBytes()));
 //                if(digest.equals(passwordHash)) {
-                    openFeed();
+                openFeed();
 //                }
 //                else {
 //                    passwordInputErrors.setText("ERROR: Password incorrect.");
@@ -69,9 +78,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFeed() {
-        Intent intent = new Intent(MainActivity.this, FeedFragment.class);
-        intent.putExtra("password", password);
-        startActivity(intent);
-        finish();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, new FeedFragment(), "feed")
+                .addToBackStack(null)
+                .commit();
     }
 }

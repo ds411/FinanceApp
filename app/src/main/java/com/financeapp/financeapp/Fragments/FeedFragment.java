@@ -1,8 +1,9 @@
 package com.financeapp.financeapp.Fragments;
 
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ public class FeedFragment extends Fragment {
     private View view;
 
     private FloatingActionButton addTransaction;
-    private TextView feedText;
+    private RecyclerView feed;
 
     private DbHelper db;
     private String password;
@@ -27,7 +28,6 @@ public class FeedFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new DbHelper(this.getActivity());
-        initializeAddTransaction();
     }
 
     @Override
@@ -43,35 +43,35 @@ public class FeedFragment extends Fragment {
     }
 
     private void initializeAddTransaction() {
-        feedText = view.findViewById(R.id.feedText);
+        feed = view.findViewById(R.id.feed);
         addTransaction = view.findViewById(R.id.addTransaction);
         addTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TransactionFragment transactionFragment = new TransactionFragment();
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container) //todo: add fragment root with this id
+                        .replace(R.id.fragmentContainer, transactionFragment, "transaction")
                         .addToBackStack(null)
                         .commit();
-                reloadFeed();
+                //reloadFeed();
             }
         });
-        reloadFeed();
+        //reloadFeed();
     }
 
-    private void reloadFeed() {
-        feedText.setText("");
-        List<Transaction> transactionList = db.getAllTransactions();
-        for(Transaction transaction : transactionList) {
-            feedText.append(
-                    transaction.getDate() +
-                            " " +
-                            transaction.getTime() +
-                            " $" +
-                            transaction.getAmount() +
-                            "\n"
-            );
-        }
-        feedText.invalidate();
-    }
+//    private void reloadFeed() {
+//        feedText.setText("");
+//        List<Transaction> transactionList = db.getAllTransactions();
+//        for(Transaction transaction : transactionList) {
+//            feedText.append(
+//                    transaction.getDate() +
+//                            " " +
+//                            transaction.getTime() +
+//                            " $" +
+//                            transaction.getAmount() +
+//                            "\n"
+//            );
+//        }
+//        feedText.invalidate();
+//    }
 }

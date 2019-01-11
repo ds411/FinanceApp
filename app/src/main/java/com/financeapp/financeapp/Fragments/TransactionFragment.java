@@ -1,20 +1,24 @@
 package com.financeapp.financeapp.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.financeapp.financeapp.Helpers.DbHelper;
-import com.financeapp.financeapp.Models.Account;
 import com.financeapp.financeapp.Models.Transaction;
 import com.financeapp.financeapp.R;
 
 import java.util.List;
 
-public class TransactionFragment extends AppCompatActivity {
+public class TransactionFragment extends Fragment {
 
+    private View view;
+    private Activity activity;
     private DbHelper db;
     private AutoCompleteTextView tagField;
     private AutoCompleteTextView otherPartyField;
@@ -24,13 +28,21 @@ public class TransactionFragment extends AppCompatActivity {
     private Spinner accountSpinner;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = new DbHelper(this.getActivity());
+    }
 
-        setContentView(R.layout.fragment_transaction);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_transaction, container, false);
+    }
 
-        db = new DbHelper(this);
-
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        view = getView();
+        activity = getActivity();
         // initializeAccountsSpinner();
         initializeOtherPartyAutocomplete();
         initializeTagAutocomplete();
@@ -38,11 +50,11 @@ public class TransactionFragment extends AppCompatActivity {
     }
 
     private void initializeCreateTransactionButton() {
-        tagField = findViewById(R.id.tagField);
-        amountField = findViewById(R.id.amountField);
-        transactionTypeField = findViewById(R.id.transactionTypeField);
+        tagField = view.findViewById(R.id.tagField);
+        amountField = view.findViewById(R.id.amountField);
+        transactionTypeField = view.findViewById(R.id.transactionTypeField);
 
-        createTransactionButton = findViewById(R.id.createTransactionButton);
+        createTransactionButton = view.findViewById(R.id.createTransactionButton);
         createTransactionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,12 +69,7 @@ public class TransactionFragment extends AppCompatActivity {
                     Transaction transaction = new Transaction(tag, otherParty, amount, transactionType);
                     db.makeTransaction(transaction);
                     // Log.e("TESTING", db.getTableAsString("Transactions"));
-
-                    Intent intent = new Intent(TransactionActivity.this, FeedActivity.class);
-                    startActivity(intent);
-                    // intent.putExtra("password", password);
-                    
-                    finish();
+                    getFragmentManager().popBackStack();
                 }
             }
         });
@@ -70,14 +77,14 @@ public class TransactionFragment extends AppCompatActivity {
 
     private void initializeOtherPartyAutocomplete() {
         List<String> otherPartyList = db.getOtherParties();
-        otherPartyField = findViewById(R.id.otherPartyField);
-        otherPartyField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, otherPartyList));
+        otherPartyField = view.findViewById(R.id.otherPartyField);
+        otherPartyField.setAdapter(new ArrayAdapter<String>(activity, android.R.layout.simple_dropdown_item_1line, otherPartyList));
     }
 
     private void initializeTagAutocomplete() {
         List<String> tagList = db.getTags();
-        tagField = findViewById(R.id.tagField);
-        tagField.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, tagList));
+        tagField = view.findViewById(R.id.tagField);
+        tagField.setAdapter(new ArrayAdapter<String>(activity, android.R.layout.simple_dropdown_item_1line, tagList));
     }
 
     // private void initializeAccountsSpinner() {
