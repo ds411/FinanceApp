@@ -7,12 +7,25 @@
         android:layout_height="wrap_content"
         android:padding="15dp">
 
-    <TextView
-            android:id="@+id/dateTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="38dp"
-            android:textAlignment="textEnd"/>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/dateTag"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="38dp"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textAlignment="textEnd"/>
+
+        <Button
+                android:id="@+id/transactionListButton"
+                android:layout_width="52dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"/>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/transactionListView"

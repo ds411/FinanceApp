@@ -39,17 +39,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         final Transaction transaction = transactionList.get(i);
 
-        viewHolder.time.setText(transaction.getTime());
-        viewHolder.amount.setText(String.format("$%.2f", transaction.getAmount()));
+        viewHolder.transactionTag.setText(transaction.getTag());
+        viewHolder.transactionOtherParty.setText(transaction.getOtherParty());
+        viewHolder.transactionAmount.setText(String.format("$%.2f", transaction.getAmount()));
 
 
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener(){
+        /*viewHolder.parentLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Log.e(TAG, "Clicked on thig");
                 Toast.makeText(mContext, transaction.getTag(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
     }
 
@@ -60,16 +61,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView time;
-        TextView amount;
+        TextView transactionTag;
+        TextView transactionOtherParty;
+        TextView transactionAmount;
 
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            time = itemView.findViewById(R.id.time);
-            amount = itemView.findViewById(R.id.amount);
-            parentLayout = itemView.findViewById(R.id.parentLayout);
+            transactionTag = itemView.findViewById(R.id.transactionTag);
+            transactionOtherParty = itemView.findViewById(R.id.transactionOtherParty);
+            transactionAmount = itemView.findViewById(R.id.transactionAmount);
         }
     }
 
