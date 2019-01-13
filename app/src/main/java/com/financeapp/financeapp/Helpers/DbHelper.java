@@ -7,9 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.financeapp.financeapp.Models.Account;
 import com.financeapp.financeapp.Models.Transaction;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -98,6 +102,27 @@ public class DbHelper extends SQLiteOpenHelper {
         }
         c.close();
         return transactionList;
+    }
+
+    public Map<String, Collection<Transaction>> getAllTransactionsGroupedByDate() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Multimap<String, Transaction> transactionMultimap = ArrayListMultimap.create();
+
+        Cursor c = db.rawQuery("SELECT * FROM Transactions ORDER BY timestamp DESC;", null);
+        while(c.moveToNext()) {
+            Transaction transaction = new Transaction()
+                            .setId(c.getLong(0))
+                            .setTag(c.getString(1))
+                            .setOtherParty(c.getString(2))
+                            .setAmount(c.getInt(3) / 100d)
+                            .setTransactionType(c.getShort(4))
+                            .setDateAndTime(c.getString(5));
+                    // .setAccount(getAccount(c.getLong(6)));
+            transactionMultimap.put(transaction.getDate(), transaction);
+        }
+        c.close();
+
+        return transactionMultimap.asMap();
     }
 
     public List<Transaction> getTransactionsByAccount(Account account) {

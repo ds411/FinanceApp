@@ -17,11 +17,11 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="38dp"
             android:textAlignment="textEnd"
-            android:layout_toEndOf="@+id/date"
+            android:layout_toEndOf="@+id/time"
             android:textSize="20sp"/>
     <TextView
-            android:id="@+id/date"
-            android:text="@string/date"
+            android:id="@+id/time"
+            android:text="@string/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

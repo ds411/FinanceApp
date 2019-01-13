@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.financeapp.financeapp.Adapters.DateRecyclerViewAdapter;
 import com.financeapp.financeapp.Adapters.RecyclerAdapter;
 import com.financeapp.financeapp.Helpers.DbHelper;
 import com.financeapp.financeapp.Models.Transaction;
@@ -72,7 +73,7 @@ public class FeedFragment extends Fragment {
     private void initRecyclerView(){
         feed = view.findViewById(R.id.feed);
         feed.removeAllViews();
-        RecyclerAdapter adapter = new RecyclerAdapter(activity, db.getAllTransactions());
+        DateRecyclerViewAdapter adapter = new DateRecyclerViewAdapter(activity, db.getAllTransactionsGroupedByDate());
         feed.setAdapter(adapter);
         feed.setLayoutManager(new LinearLayoutManager(activity));
     }

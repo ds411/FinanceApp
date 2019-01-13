@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import com.financeapp.financeapp.Helpers.DbHelper;
-import com.financeapp.financeapp.Models.RecyclerAdapter;
+import com.financeapp.financeapp.Adapters.RecyclerAdapter;
 import com.financeapp.financeapp.Models.Transaction;
 
 import java.util.ArrayList;
