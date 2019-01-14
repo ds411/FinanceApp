@@ -8,28 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.financeapp.financeapp.Models.Transaction;
 import com.financeapp.financeapp.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
+public class DateTransactionRecyclerAdapter extends RecyclerView.Adapter<DateTransactionRecyclerAdapter.ViewHolder>{
 
     private static final String TAG = "RecycleAdapter";
 
     private ArrayList<Transaction> transactionList;
     private Context mContext;
 
-    public RecyclerAdapter(Context context, Collection<Transaction> transactionList){
+    public DateTransactionRecyclerAdapter(Context context, Collection<Transaction> transactionList){
         this.transactionList = new ArrayList<>(transactionList);
         mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_transaction, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_transaction_date_feed, parent, false);
         return new ViewHolder(view);
     }
 

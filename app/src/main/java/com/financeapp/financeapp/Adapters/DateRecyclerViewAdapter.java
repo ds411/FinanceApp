@@ -38,7 +38,7 @@ public class DateRecyclerViewAdapter extends RecyclerView.Adapter<DateRecyclerVi
         Collection<Transaction> transactionList = transactionMap.get(date);
 
         viewHolder.dateTag.setText(date);
-        viewHolder.transactionListView.setAdapter(new RecyclerAdapter(mContext, transactionList));
+        viewHolder.transactionListView.setAdapter(new DateTransactionRecyclerAdapter(mContext, transactionList));
         viewHolder.transactionListView.setLayoutManager(new LinearLayoutManager(mContext));
 
         viewHolder.transactionListButton.setOnClickListener(new View.OnClickListener() {

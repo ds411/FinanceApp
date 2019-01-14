@@ -1,6 +1,5 @@
 package com.financeapp.financeapp.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.financeapp.financeapp.MainActivity;
 import com.financeapp.financeapp.R;
 
 import java.security.MessageDigest;
@@ -80,7 +78,7 @@ public class PasswordScreenFragment extends Fragment {
     private void openFeed() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, new FeedFragment(), "feed")
+                .replace(R.id.fragmentContainer, new TabPagerFragment(), "tabPagerFragment")
                 .addToBackStack(null)
                 .commit();
     }

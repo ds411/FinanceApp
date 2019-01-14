@@ -1,7 +1,6 @@
 package com.financeapp.financeapp;
 
-import com.financeapp.financeapp.Fragments.FeedFragment;
-import android.Manifest;
+import com.financeapp.financeapp.Fragments.DateFeedFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openFeed() {
-        Intent intent = new Intent(MainActivity.this, FeedFragment.class);
+        Intent intent = new Intent(MainActivity.this, DateFeedFragment.class);
         intent.putExtra("password", password);
         startActivity(intent);
         finish();

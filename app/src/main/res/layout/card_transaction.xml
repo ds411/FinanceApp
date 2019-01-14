@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/parentLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp">
+        android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/transactionTag"
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"/>
-
-    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
 
         <TextView
-                android:id="@+id/transactionAmount"
-                android:text="@string/amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="38dp"
-                android:textAlignment="textEnd"
-                android:layout_toEndOf="@+id/transactionOtherParty"
-                android:textSize="20sp"/>
+                android:id="@+id/transactionCardOtherParty"
+                android:textSize="20sp"
+                android:layout_width="198dp"
+                android:layout_height="wrap_content"/>
+
         <TextView
-                android:id="@+id/transactionOtherParty"
-                android:text="@string/transaction_otherParty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="53dp"
-                android:textSize="20sp"/>
+                android:id="@+id/transactionCardAmount"
+                android:textSize="20sp"
+                android:layout_toEndOf="@id/transactionCardOtherParty"
+                android:layout_width="199dp"
+                android:layout_height="wrap_content" android:layout_marginStart="-10dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/transactionCardDate"
+                android:textSize="20sp"
+                android:layout_width="189dp"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/transactionCardTime"
+                android:textSize="20sp"
+                android:layout_toEndOf="@id/transactionCardDate"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 

@@ -1,8 +1,8 @@
 package com.financeapp.financeapp.Fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.financeapp.financeapp.Adapters.DateRecyclerViewAdapter;
-import com.financeapp.financeapp.Adapters.FeedTransactionRecyclerViewAdapter;
 import com.financeapp.financeapp.Helpers.DbHelper;
 import com.financeapp.financeapp.R;
 
 import java.util.ArrayList;
 
-public class FeedFragment extends Fragment {
+public class DateFeedFragment extends Fragment {
 
     private Activity activity;
     private View view;
@@ -70,7 +69,7 @@ public class FeedFragment extends Fragment {
     private void initRecyclerView(){
         feed = view.findViewById(R.id.feed);
         feed.removeAllViews();
-        FeedTransactionRecyclerViewAdapter adapter = new FeedTransactionRecyclerViewAdapter(activity, db.getAllTransactions());
+        DateRecyclerViewAdapter adapter = new DateRecyclerViewAdapter(activity, db.getAllTransactionsGroupedByDate());
         feed.setAdapter(adapter);
         feed.setLayoutManager(new LinearLayoutManager(activity));
     }

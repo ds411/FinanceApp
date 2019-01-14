@@ -1,20 +1,6 @@
 package com.financeapp.financeapp;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
-import com.financeapp.financeapp.Helpers.DbHelper;
-import com.financeapp.financeapp.Adapters.RecyclerAdapter;
-import com.financeapp.financeapp.Models.Transaction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FeedActivity extends AppCompatActivity {
 
@@ -55,7 +41,7 @@ public class FeedActivity extends AppCompatActivity {
 //
 //    private void initRecyclerView(){
 //        RecyclerView recyclerView = findViewById(R.id.feed);
-//        RecyclerAdapter adapter = new RecyclerAdapter(this, dateList, amountList, tagList);
+//        DateTransactionRecyclerAdapter adapter = new DateTransactionRecyclerAdapter(this, dateList, amountList, tagList);
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //
