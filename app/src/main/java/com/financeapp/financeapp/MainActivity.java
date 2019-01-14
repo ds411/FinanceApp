@@ -1,5 +1,6 @@
 package com.financeapp.financeapp;
 
+import android.support.v4.app.FragmentManager;
 import com.financeapp.financeapp.Fragments.DateFeedFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -72,5 +73,9 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("password", password);
         startActivity(intent);
         finish();
+    }
+
+    public FragmentManager getThisSupportedFragmentManager() {
+        return getSupportFragmentManager();
     }
 }

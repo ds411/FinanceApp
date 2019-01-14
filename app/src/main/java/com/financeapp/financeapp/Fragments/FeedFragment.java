@@ -1,15 +1,14 @@
 package com.financeapp.financeapp.Fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.financeapp.financeapp.Adapters.DateRecyclerViewAdapter;
 import com.financeapp.financeapp.Adapters.FeedTransactionRecyclerViewAdapter;
 import com.financeapp.financeapp.Helpers.DbHelper;
 import com.financeapp.financeapp.R;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 
 public class FeedFragment extends Fragment {
 
-    private Activity activity;
+    private AppCompatActivity activity;
     private View view;
 
     private FloatingActionButton addTransaction;
@@ -46,7 +45,7 @@ public class FeedFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         view = getView();
-        activity = getActivity();
+        activity = (AppCompatActivity) getActivity();
         initializeAddTransaction();
         initRecyclerView();
     }
@@ -57,7 +56,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 TransactionFragment transactionFragment = new TransactionFragment();
-                getFragmentManager().beginTransaction()
+                activity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, transactionFragment, "transaction")
                         .addToBackStack(null)
                         .commit();

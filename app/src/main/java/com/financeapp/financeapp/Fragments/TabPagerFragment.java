@@ -35,7 +35,7 @@ public class TabPagerFragment extends Fragment {
         activity = getActivity();
         viewPager = activity.findViewById(R.id.pager);
         tabLayout = activity.findViewById(R.id.pager_tabs);
-        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(activity, getFragmentManager());
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(activity, getChildFragmentManager());
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
