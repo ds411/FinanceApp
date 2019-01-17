@@ -15,6 +15,11 @@ public class GeneralStatRecyclerAdapter extends RecyclerView.Adapter<GeneralStat
 
     private ArrayList<Double> amountStats = new ArrayList<>();
     private ArrayList<String> statName = new ArrayList<>();
+    private final static String[] statNames = new String[]{
+            "Spent Today","Spent Week","Spent Month","Spent Year","Spent Total",
+            "Earned Today","Earned Week","Earned Month","Earned Year","Earned Total",
+            "Net Today","Net Week","Net Month","Net Year","Net Total"
+    };
     private Context mContext;
 
     public GeneralStatRecyclerAdapter(Context context, ArrayList<String> statName, ArrayList<Double> amountStats) {
@@ -30,13 +35,13 @@ public class GeneralStatRecyclerAdapter extends RecyclerView.Adapter<GeneralStat
     }
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.statName.setText(statName.get(i));
-        viewHolder.statNumber.setText(amountStats.get(i)+"");
+        viewHolder.statName.setText(statNames[i]);
+        viewHolder.statNumber.setText(String.format("$%.2f", amountStats.get(i)));
     }
 
     @Override
     public int getItemCount() {
-        return amountStats.size();
+        return statNames.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

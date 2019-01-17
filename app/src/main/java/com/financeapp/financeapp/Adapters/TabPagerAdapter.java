@@ -3,13 +3,13 @@ package com.financeapp.financeapp.Adapters;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import com.financeapp.financeapp.Fragments.DateFeedFragment;
 import com.financeapp.financeapp.Fragments.FeedFragment;
 import com.financeapp.financeapp.Fragments.StatFragment;
 
 
-public class TabPagerAdapter extends FragmentPagerAdapter {
+public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     private Context mContext;
 

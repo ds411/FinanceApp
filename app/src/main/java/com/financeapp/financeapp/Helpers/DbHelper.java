@@ -27,7 +27,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     "otherParty TEXT, " +
                     "amount INTEGER, " +
                     "transactionType INTEGER, " +
-                    "timestamp TEXT DEFAULT CURRENT_TIMESTAMP," +
+                    "timestamp TEXT DEFAULT (datetime('now', 'localtime'))," +
                     "account_id INTEGER" +
             ");";
 
@@ -215,122 +215,123 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public double getMoneySpentToday() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', 'start of day') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', 'start of day') AND datetime('now', 'localtime');", null);
+
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneySpentThisWeek() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-7 days') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-7 days') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneySpentThisMonth() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneySpentThisYear() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneySpentAll() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0;", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 0;", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneyEarnedToday() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount from Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', 'start of day') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', 'start of day') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneyEarnedThisWeek() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-6 days') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-6 days') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneyEarnedThisMonth() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime');", null);
-        while(c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneyEarnedThisYear() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
-        while (c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getMoneyEarnedAll() {
         SQLiteDatabase db = this.getReadableDatabase();
-        long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1;", null);
-        while (c.moveToNext()) {
-            spent += c.getInt(0);
+        Cursor c = db.rawQuery("SELECT SUM(amount) FROM Transactions WHERE transactionType = 1;", null);
+        if(c.moveToFirst()) {
+            double spent = c.getInt(0) / 100d;
+            c.close();
+            return spent;
         }
-        c.close();
-        return spent / 100d;
+        return 0d;
     }
 
     public double getNetMoneyToday() {

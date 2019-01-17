@@ -27,6 +27,8 @@ public class StatFragment extends Fragment {
     private ArrayList<Double> amountStats = new ArrayList<>();
     private ArrayList<String> statName = new ArrayList<>();
 
+    private GeneralStatRecyclerAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,33 +53,15 @@ public class StatFragment extends Fragment {
         feed = view.findViewById(R.id.statFeed);
         feed.removeAllViews();
 
-        GeneralStatRecyclerAdapter adapter = new GeneralStatRecyclerAdapter(activity, statName, amountStats);
+        adapter = new GeneralStatRecyclerAdapter(activity, statName, amountStats);
         feed.setAdapter(adapter);
         feed.setLayoutManager(new LinearLayoutManager(activity));
     }
 
     private void dbTransactions(){
-        statName.add("Spent Today");
-        statName.add("Spent Week");
-        statName.add("Spent Month");
-        statName.add("Spent Year");
-        statName.add("Spent Total");
-
-        statName.add("Earned Today");
-        statName.add("Earned Week");
-        statName.add("Earned Month");
-        statName.add("Earned Year");
-        statName.add("Earned Total");
-
-        statName.add("Net Today");
-        statName.add("Net Week");
-        statName.add("Net Month");
-        statName.add("Net Year");
-        statName.add("Net Total");
-
-
         amountStats.add(db.getMoneySpentToday());
         amountStats.add(db.getMoneySpentThisWeek());
+        amountStats.add(db.getMoneySpentThisMonth());
         amountStats.add(db.getMoneySpentThisYear());
         amountStats.add(db.getMoneySpentAll());
 
@@ -85,7 +69,7 @@ public class StatFragment extends Fragment {
         amountStats.add(db.getMoneyEarnedThisWeek());
         amountStats.add(db.getMoneyEarnedThisMonth());
         amountStats.add(db.getMoneyEarnedThisYear());
-        amountStats.add(db.getMoneySpentAll());
+        amountStats.add(db.getMoneyEarnedAll());
 
         amountStats.add(db.getNetMoneyToday());
         amountStats.add(db.getNetMoneyThisWeek());

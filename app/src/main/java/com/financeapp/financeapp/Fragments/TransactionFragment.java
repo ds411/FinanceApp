@@ -65,7 +65,15 @@ public class TransactionFragment extends Fragment {
                     String otherParty = otherPartyField.getText().toString();
 
                     int amount = (int) (Double.parseDouble(amountField.getText().toString()) * 100);
-                    short transactionType = (short) transactionTypeField.getCheckedRadioButtonId();
+                    short transactionType = 0;
+                    switch(transactionTypeField.getCheckedRadioButtonId()) {
+                        case R.id.radioPayment:
+                            transactionType = 0;
+                            break;
+                        case R.id.radioReceipt:
+                            transactionType = 1;
+                            break;
+                    }
                     Transaction transaction = new Transaction(tag, otherParty, amount, transactionType);
                     db.makeTransaction(transaction);
                     // Log.e("TESTING", db.getTableAsString("Transactions"));
