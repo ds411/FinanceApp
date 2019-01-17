@@ -43,15 +43,13 @@ public class StatFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         view = getView();
         activity = (AppCompatActivity) getActivity();
-        // initializeAddTransaction();
+        dbTransactions();
         initRecyclerView();
     }
 
     private void initRecyclerView(){
-        feed = view.findViewById(R.id.feed);
+        feed = view.findViewById(R.id.statFeed);
         feed.removeAllViews();
-
-        dbTransactions();
 
         GeneralStatRecyclerAdapter adapter = new GeneralStatRecyclerAdapter(activity, statName, amountStats);
         feed.setAdapter(adapter);
@@ -63,27 +61,38 @@ public class StatFragment extends Fragment {
         statName.add("Spent Week");
         statName.add("Spent Month");
         statName.add("Spent Year");
+        statName.add("Spent Total");
+
         statName.add("Earned Today");
         statName.add("Earned Week");
         statName.add("Earned Month");
         statName.add("Earned Year");
+        statName.add("Earned Total");
+
         statName.add("Net Today");
         statName.add("Net Week");
         statName.add("Net Month");
         statName.add("Net Year");
+        statName.add("Net Total");
 
 
         amountStats.add(db.getMoneySpentToday());
         amountStats.add(db.getMoneySpentThisWeek());
         amountStats.add(db.getMoneySpentThisYear());
+        amountStats.add(db.getMoneySpentAll());
+
         amountStats.add(db.getMoneyEarnedToday());
         amountStats.add(db.getMoneyEarnedThisWeek());
         amountStats.add(db.getMoneyEarnedThisMonth());
         amountStats.add(db.getMoneyEarnedThisYear());
+        amountStats.add(db.getMoneySpentAll());
+
         amountStats.add(db.getNetMoneyToday());
         amountStats.add(db.getNetMoneyThisWeek());
         amountStats.add(db.getNetMoneyThisMonth());
         amountStats.add(db.getNetMoneyThisYear());
+        amountStats.add(db.getNetMoneyAll());
+
     }
 
 }

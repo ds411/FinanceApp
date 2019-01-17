@@ -6,13 +6,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/feedFragmentRoot"
-        tools:context="com.financeapp.financeapp.Fragments.DateFeedFragment">
+        android:id="@+id/statFragmentRoot"
+        tools:context="com.financeapp.financeapp.Fragments.StatFragment">
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="395dp"
             android:layout_height="554dp"
-            android:id="@+id/feed"
+            android:id="@+id/statFeed"
             android:scrollbars="vertical"
             tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp"/>
 

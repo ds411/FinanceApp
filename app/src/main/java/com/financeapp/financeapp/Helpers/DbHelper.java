@@ -261,6 +261,18 @@ public class DbHelper extends SQLiteOpenHelper {
         return spent / 100d;
     }
 
+    public double getMoneySpentAll() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0;", null);
+        while(c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
     public double getMoneyEarnedToday() {
         SQLiteDatabase db = this.getReadableDatabase();
         long spent = 0;
@@ -309,6 +321,18 @@ public class DbHelper extends SQLiteOpenHelper {
         return spent / 100d;
     }
 
+    public double getMoneyEarnedAll() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long spent = 0;
+
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1;", null);
+        while (c.moveToNext()) {
+            spent += c.getInt(0);
+        }
+        c.close();
+        return spent / 100d;
+    }
+
     public double getNetMoneyToday() {
         return getMoneyEarnedToday() - getMoneySpentToday();
     }
@@ -325,4 +349,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return getMoneyEarnedThisYear() - getMoneySpentThisYear();
     }
 
+    public double getNetMoneyAll() {
+        return getMoneyEarnedAll() - getMoneySpentAll();
+    }
 }
