@@ -6,9 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.financeapp.financeapp.Fragments.DateFeedFragment;
 import com.financeapp.financeapp.Fragments.FeedFragment;
+import com.financeapp.financeapp.Fragments.StatFragment;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
@@ -26,6 +25,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 return new FeedFragment();
             case 1:
                 return new DateFeedFragment();
+            case 2:
+                return new StatFragment();
             default:
                 return null;
         }
@@ -39,6 +40,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 return "Feed";
             case 1:
                 return "Transactions By Date";
+            case 2:
+                return "Stats";
             default:
                 return null;
         }
@@ -46,6 +49,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

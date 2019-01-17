@@ -253,7 +253,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND date BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 0 AND timestamp BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
         while(c.moveToNext()) {
             spent += c.getInt(0);
         }
@@ -301,7 +301,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         long spent = 0;
 
-        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND date BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
+        Cursor c = db.rawQuery("SELECT amount FROM Transactions WHERE transactionType = 1 AND timestamp BETWEEN datetime('now', '-1 year') AND datetime('now', 'localtime');", null);
         while (c.moveToNext()) {
             spent += c.getInt(0);
         }

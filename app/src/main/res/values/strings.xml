@@ -13,4 +13,5 @@
     <string name="otherparty">otherParty</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="stat_name">Stat Name</string>
 </resources>
